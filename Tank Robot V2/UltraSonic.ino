@@ -28,7 +28,7 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);    // Read the signal from the sensor: a HIGH pulse whose
   
   // Convert the time into a distance
-  cm = (duration/2) * 0.0343;     // Divide by 29.1 or multiply by 0.0343(расстояние = время * скорость) скорость звука 343 м/с
+  cm = (duration/2) * 0.0343;     // distance = (traveltime/2) x speed of sound     (343m/s = 0.0343 cm/uS = 1/29.1 cm/uS)
   
   Serial.print(cm);
   Serial.print("cm");
