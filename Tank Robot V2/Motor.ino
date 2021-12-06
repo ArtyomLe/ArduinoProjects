@@ -14,13 +14,14 @@ void setup()
 
 void loop()               // rotation direction of motors is decided by the high/low level
 {                         // LOW = Clockwise,  HIGH = Anticlockwise
+                          // The PWM value is in the range of 0-255, the larger the number, the faster the motor rotates.
   delay(5000);
   
   //front
   digitalWrite(ML_DirA, LOW);     //set the direction control pin of left motor to LOW
   digitalWrite(MR_DirB, LOW);     //set the direction control pin of right motor to LOW
-  analogWrite(ML_SpeedA, 200);    //set the PWM control speed of left motor to 200rpm
-  analogWrite(MR_SpeedB, 200);    //set the PWM control speed of right motor to 200rpm
+  analogWrite(ML_SpeedA, 200);    //set the PWM control speed of left motor to 200
+  analogWrite(MR_SpeedB, 200);    //set the PWM control speed of right motor to 200
 
   //back
   delay(2000);                     //delay in 2s
