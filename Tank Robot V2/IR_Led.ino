@@ -17,15 +17,15 @@ void loop()
 {
     if (irrecv.decode(&results))
     {
-        if (results.value == 0xFF02FD & a == 0)   // according to chart, press "OK" button on remote control, LED will be controled   
+        if (results.value == 0xFF629D & a == 0)   // according to chart, press "UP" button on remote control, LED will be controled   
         {
             digitalWrite(LED_PIN, HIGH);          // LED will be on
             a = 1;
         }
-        elif (results.value == 0xFF02FD & a == 1) // press again
+        else if (results.value == 0xFFA857 & a == 1) // press "DOWN" button 
         {
             digitalWrite(LED_PIN, LOW);           // LED will go off
-	    a = 0;   
+      a = 0;   
         }
          
         irrecv.resume();                          // recieve the next value
