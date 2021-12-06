@@ -1,3 +1,4 @@
+// Goes forward and back for 2s, turns left and right for 2s, stops for 2s and alternately.
 
 #define ML_DirA 12               //define the direction control pin of left motor
 #define MR_DirB 13               //define the direction control pin of right motor
