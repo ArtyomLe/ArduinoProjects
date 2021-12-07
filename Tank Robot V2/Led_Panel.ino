@@ -17,10 +17,8 @@ void loop(){
   matrix_display(smile);                            // display smile face
 }
 
-// the function for dot matrix display
 
-
-void matrix_display(unsigned char matrix_value[])
+void matrix_display(unsigned char matrix_value[])   // This function is used to display of dot matrix
 {
   IIC_start();                                      // use the function of the data transmission start condition
   IIC_send(0xc0);                                   //select address
