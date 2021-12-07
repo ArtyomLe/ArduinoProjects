@@ -13,7 +13,7 @@ unsigned char clear[] =   {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x0
 #define SDA_Pin  A4  //Set data pin to A4
 
 
-void setup(){ 
+void setup(){               // (SCLK) is SCL, (DIN) is SDA:
                             //Set pins to output
   pinMode(SCL_Pin,OUTPUT);
   pinMode(SDA_Pin,OUTPUT);
