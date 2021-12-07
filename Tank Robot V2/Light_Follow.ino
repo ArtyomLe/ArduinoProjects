@@ -1,5 +1,4 @@
 
-
 #define light_L_Pin A1         //define the pin of left photo resistor
 #define light_R_Pin A2         //define the pin of right photo resistor
 #define ML_Ctrl 13             //define the direction control pin of left motor
@@ -25,14 +24,11 @@ void loop(){
   left_light = analogRead(light_L_Pin);      // Считываем показания освещённости с левого датчика
   right_light = analogRead(light_R_Pin);     // Считываем показания освещённости с правого датчика
   Serial.print(" left_light_value = ");      // Выводим значения в порт
-  delay(250);
   Serial.println(left_light);
-  delay(250);
   Serial.print("right_light_value = ");
-  delay(250);
   Serial.println(right_light);
-  delay(250);
-  if (left_light > 650 && right_light > 650) //the value detected photo resistor，go front
+  
+  if (left_light > 650 && right_light > 650)        //the value detected photo resistor，go front
   {  
     Car_front();
   } 
@@ -40,11 +36,11 @@ void loop(){
   {
     Car_left();
   } 
-  else if (left_light <= 650 && right_light > 650) //the value detected photo resistor，turn right
+  else if (left_light <= 650 && right_light > 650)  //the value detected photo resistor，turn right
   {
     Car_right();
   } 
-  else  //other situations, stop
+  else                                              //other situations(no light), stop
   {
     Car_Stop();
   }
@@ -54,27 +50,27 @@ void loop(){
 void Car_front()
 {
   digitalWrite(MR_Ctrl,LOW);  // Вращаем мотор по часовой стрелке
-  analogWrite(MR_PWM,100);    // Со скоростью 100. Диапазон(0 - 255) 
+  analogWrite(MR_PWM,150);    // Со скоростью 100. Диапазон(0 - 255) 
   digitalWrite(ML_Ctrl,LOW);  // Вращаем мотор по часовой стрелке
-  analogWrite(ML_PWM,100);    // Со скоростью 100. Диапазон(0 - 255)
+  analogWrite(ML_PWM,150);    // Со скоростью 100. Диапазон(0 - 255)
 }
 
 
 void Car_left()
 {
   digitalWrite(MR_Ctrl,LOW);  // Вращаем мотор по часовой стрелке
-  analogWrite(MR_PWM,100);
+  analogWrite(MR_PWM,150);
   digitalWrite(ML_Ctrl,HIGH); // Вращаем мотор против часовой стрелки
-  analogWrite(ML_PWM,100);
+  analogWrite(ML_PWM,150);
 }
 
 
 void Car_right()
 {
   digitalWrite(MR_Ctrl,HIGH);
-  analogWrite(MR_PWM,100);
+  analogWrite(MR_PWM,150);
   digitalWrite(ML_Ctrl,LOW);
-  analogWrite(ML_PWM,100);
+  analogWrite(ML_PWM,150);
 }
 
 
