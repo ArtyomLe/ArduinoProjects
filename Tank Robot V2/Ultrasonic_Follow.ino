@@ -114,18 +114,18 @@ void Car_Stop()
 // the function for dot matrix display
 void matrix_display(unsigned char matrix_value[])
 {
-  IIC_start(); // call the function that data transmission start
-  IIC_send(0xc0);  //Choose address
+  IIC_start();                           //call the function that data transmission start
+  IIC_send(0xc0);                        //Choose address
   
-  for(int i = 0;i < 16;i++) //pattern data has 16 bits
+  for(int i = 0; i < 16; i++)            //pattern data has 16 bits
   {
-     IIC_send(matrix_value[i]); //data to convey patterns
+     IIC_send(matrix_value[i]);          //data to convey patterns
   }
 
-  IIC_end();   //end to convey data pattern
+  IIC_end();                             //end to convey data pattern
   
   IIC_start();
-  IIC_send(0x8A);  //select pulse width4/16, control display
+  IIC_send(0x8A);                        //select pulse width4/16, control display brightness
   IIC_end();
 }
 
@@ -143,11 +143,11 @@ void IIC_start()
 /*********Transmit data*******************************/
 void IIC_send(unsigned char send_data)
 {
-  for(char i = 0;i < 8;i++)  //Each byte has 8 bits
+  for(char i = 0; i < 8; i++)          //Each byte has 8 bits
   {
-      digitalWrite(SCL_Pin,LOW);  //pull down clock pin SCL Pin to change the signals of SDA      
-delayMicroseconds(3);
-      if(send_data & 0x01)  //set high and low level of SDA_Pin according to 1 or 0 of every bit
+      digitalWrite(SCL_Pin,LOW);       //pull down clock pin SCL Pin to change the signals of SDA      
+      delayMicroseconds(3);
+      if(send_data & 0x01)             //set high and low level of SDA_Pin according to 1 or 0 of every bit
       {
         digitalWrite(SDA_Pin,HIGH);
       }
@@ -156,9 +156,9 @@ delayMicroseconds(3);
         digitalWrite(SDA_Pin,LOW);
       }
       delayMicroseconds(3);
-      digitalWrite(SCL_Pin,HIGH); //pull up clock pin SCL_Pin to stop transmitting data
+      digitalWrite(SCL_Pin,HIGH);       //pull up clock pin SCL_Pin to stop transmitting data
       delayMicroseconds(3);
-      send_data = send_data >> 1;  // detect bit by bit, so move the data right by one
+      send_data = send_data >> 1;       //detect bit by bit, so move the data right by one
   }
 }
 
