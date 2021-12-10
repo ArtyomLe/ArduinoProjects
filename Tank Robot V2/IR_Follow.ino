@@ -139,9 +139,9 @@ void IIC_send(unsigned char send_data)
 {
   for(char i = 0; i < 8; i++)         //Each byte has 8 bits for every character
   {
-      digitalWrite(SCL_Pin,LOW);      //pull down clock pin SCL Pin to change the signals of SDA      
+      digitalWrite(SCL_Pin,LOW);    //pull down clock pin SCL Pin to change the signals of SDA      
       delayMicroseconds(3);
-      if(send_data & 0x01)            //set high and low level of SDA_Pin according to 1 or 0 of every bit
+      if(send_data & 0x01)          //set high and low level of SDA_Pin according to 1 or 0 of every bit
       {
         digitalWrite(SDA_Pin,HIGH);
       }
@@ -150,9 +150,9 @@ void IIC_send(unsigned char send_data)
         digitalWrite(SDA_Pin,LOW);
       }
       delayMicroseconds(3);
-      digitalWrite(SCL_Pin,HIGH);     //pull up clock pin SCL_Pin to stop transmitting data
+      digitalWrite(SCL_Pin,HIGH);   //pull up clock pin SCL_Pin to stop transmitting data
       delayMicroseconds(3);
-      send_data = send_data >> 1;     // detect bit by bit, so move the data right by one
+      send_data = send_data >> 1;   // detect bit by bit, so move the data right by one
   }
 }
 
@@ -208,14 +208,14 @@ void Car_Stop()
 void Car_T_left()
 {
   digitalWrite(MR_Ctrl,LOW);
-  analogWrite(MR_PWM,200);
+  analogWrite(MR_PWM,250);
   digitalWrite(ML_Ctrl,LOW);
-  analogWrite(ML_PWM,140);
+  analogWrite(ML_PWM,40);
 }
 void Car_T_right()
 {
   digitalWrite(MR_Ctrl,LOW);
-  analogWrite(MR_PWM,140);
+  analogWrite(MR_PWM,40);
   digitalWrite(ML_Ctrl,LOW);
-  analogWrite(ML_PWM,200);
+  analogWrite(ML_PWM,250);
 }
