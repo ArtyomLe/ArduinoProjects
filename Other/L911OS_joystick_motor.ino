@@ -1,4 +1,4 @@
-// Motor A
+
 int in1 = 3;
 int in2 = 2;
   
