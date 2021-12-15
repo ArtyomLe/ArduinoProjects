@@ -84,3 +84,35 @@ void loop () {
     }
 }
 
+/**************** Delay без прекращения процессов *******************/
+unsigned long last_time;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (millis() - last_time > 500) {
+    last_time = millis();
+    Serial.println("0.5 sec");
+  }
+}
+
+/********************Раз в 23 дня*********************/
+
+unsigned long last_time;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (millis() - last_time > (unsigned long) 23 * 24 * 60 * 60 * 1000) {
+    last_time = millis();
+    Serial.println("0.5 sec");
+  }
+}
+
+/********************************************************/
+
+
