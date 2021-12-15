@@ -40,3 +40,27 @@ void loop() {
 
 /*******************************************************/
 
+byte val;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop () {
+  if (Serial.available()) {
+    val = Serial.parseInt();
+    if (val == 1) {
+      Serial.println("Вы ввели 1");
+    } else if (val == 2) {
+      Serial.println("Вы ввели 2");
+    } else if (val == 3) {
+      Serial.println("Вы ввели 3");
+    } else {
+      Serial.println("Мимо");
+    }
+  }
+}
+
+/********************************************************************/
+
+
