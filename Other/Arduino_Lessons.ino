@@ -18,3 +18,25 @@ void loop() {
 
   //put code here
 }
+
+/***************************************************/
+
+byte val;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available()) {              // Проверка на ввод данных в порт 
+    val = Serial.parseInt();             // Прочитать число целиком
+    if (val == 1 || val == 5) {          // 1 ИЛИ 5 
+      Serial.println("Вы ввели 1 или 5");
+    } else {
+      Serial.println("Мимо!");
+    }    
+  }
+}
+
+/*******************************************************/
+
