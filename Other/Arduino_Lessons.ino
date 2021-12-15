@@ -63,4 +63,24 @@ void loop () {
 
 /********************************************************************/
 
+byte val;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop () {
+  if (Serial.available()) {
+    val = Serial.parseInt();
+    switch (val) {
+      case 1: Serial.println("Вы ввели 1");
+       break;
+      case 2: Serial.println("Вы ввели 2");
+       break;
+      case 3: Serial.println("Вы ввели 3");
+       break;
+      default: Serial.print("Мимо!");
+    }
+    }
+}
 
