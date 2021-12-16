@@ -150,3 +150,23 @@ void loop() {
 }
 /***************************************************************/
 
+void setup() {
+  pinMode(13, INPUT);
+  pinMode(12, INPUT);
+  pinMode(A5, INPUT_PULLUP);
+
+  Serial.begin(9600);
+  
+}
+
+void loop() {
+  boolean button1 = !digitalRead(A5); // Инвертируем сигнал
+  boolean button2 = digitalRead(13);
+
+  Serial.print("Button1: ");Serial.print(button1);
+  Serial.print(", Button2: ");Serial.println(button2);
+}
+
+/**********************************************************************/
+
+
