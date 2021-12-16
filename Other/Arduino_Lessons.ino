@@ -169,4 +169,22 @@ void loop() {
 
 /**********************************************************************/
 
+void setup() {
+  pinMode(A5, INPUT_PULLUP);
+  pinMode(13, OUTPUT); // Встроенный светодиод  
+
+  Serial.begin(9600);
+  
+}
+
+void loop() {
+  boolean button1 = !digitalRead(A5); // Инвертируем сигнал
+  boolean button2 = digitalRead(13);
+
+  if (button1 == 1) digitalWrite(13, HIGH); // Включить светодиод
+  else digitalWrite(13, LOW);               // Выключить светодиод
+
+  Serial.print("Button1: ");Serial.print(button1);
+  Serial.print(", Button2: ");Serial.println(button2);
+}
 
