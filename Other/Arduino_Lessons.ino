@@ -188,3 +188,32 @@ void loop() {
   Serial.print(", Button2: ");Serial.println(button2);
 }
 
+/***********************************************************************/
+
+boolean butt_flag = 0;           // Логическая переменная запоминающая последнее состояние кнопки
+boolean butt;                    // Текущее значение кнопки
+  
+void setup() {
+  pinMode(3, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  butt = !digitalRead(3);       // Считать текущее состояние кнопки (1-нажата, 0-отпущена)
+  
+  if (butt == 1 && butt_flag == 0) {
+    butt_flag = 1;
+    Serial.println("Button pressed");
+    Serial.println(butt);
+  }
+  if (butt == 0 && butt_flag == 1) {
+    butt_flag = 0;
+    Serial.println("Button released");
+    Serial.println(butt);
+  }
+  
+}
+
+/**************************************************************/
+
+
