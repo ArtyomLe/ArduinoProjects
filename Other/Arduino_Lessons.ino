@@ -370,3 +370,55 @@ void loop() {
 
 /**************************************************************************/
 
+boolean butt_flag = 0;           // Логическая переменная запоминающая последнее состояние кнопки
+boolean butt;                    // Текущее значение кнопки
+boolean led_flag = 0;            // Логическая переменная запоминающая последнее состояние светодиода
+unsigned long last_press;        // Предотвращаем дребезг контакта  
+byte LEDcounter = 4;
+byte BUTTcounter = 0;
+
+
+void setup() {
+  Serial.begin(9600);
+  
+  pinMode(3, INPUT_PULLUP);      // Кнопка
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  
+  digitalWrite(4, 0);
+  digitalWrite(5, 0);
+  digitalWrite(6, 0);
+  digitalWrite(7, 0);
+  
+}
+
+void loop() {
+  butt = !digitalRead(3);              // Считать текущее состояние кнопки (1-нажата, 0-отпущена)
+  
+  if (butt == 1 && butt_flag == 0 && millis() - last_press >= 120) {
+    butt_flag = 1;
+    Serial.println("Button pressed");
+
+      if (BUTTcounter <= 3) {
+        digitalWrite(LEDcounter, 1);            // Начинаем с 4 выхода подавать напряжение на светодиод
+        LEDcounter ++;
+      } else {
+        LEDcounter --;
+        digitalWrite(LEDcounter, 0);
+        
+    }
+    BUTTcounter ++;
+    last_press = millis();
+    
+  }
+  if (butt == 0 && butt_flag == 1 && millis() - last_press >= 120) {
+    butt_flag = 0;
+    last_press = millis();
+    Serial.println("Button released");
+  }
+  
+}
+
+/*********************************************************************************/
