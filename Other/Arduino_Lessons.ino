@@ -297,3 +297,31 @@ void loop() {
 /******************************************************/
 
 
+void setup() {
+  Serial.begin(9600);
+  pinMode(3, INPUT_PULLUP);
+}
+
+bool flag = false;
+uint32_t btnTimer = 0;
+void loop() {
+  // читаем инвертированное значение для удобства
+  bool btnState = !digitalRead(3);
+  if (btnState && !flag && millis() - btnTimer > 100) {
+    flag = true;
+    btnTimer = millis();
+    Serial.println("press");
+  }
+  if (btnState && flag && millis() - btnTimer > 500) {
+    btnTimer = millis();
+    Serial.println("press hold");
+  }
+  if (!btnState && flag && millis() - btnTimer > 500) {
+    flag = false;
+    btnTimer = millis();
+    Serial.println("release");
+  }
+}
+
+/*******************************************************************/
+
