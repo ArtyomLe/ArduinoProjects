@@ -449,3 +449,35 @@ void loop() {
     butt_flag = 0;                    // Запоминаем что отпустили кнопку
   }
 }
+
+/***********************************************************************************/
+
+#define button_pin 3    // Пин кнопки
+#define relay_pin1 6     // Пин реле
+#define relay_pin2 7
+
+boolean butt_flag = 0;  // Флаг нажатия кнопки
+boolean butt;           // Переменная хранящая состояние кнопки
+boolean flag = 0;       // Флаг режима
+uint32_t last_press;    // Таймер для фильтра дребезга
+
+void setup() {
+   pinMode(button_pin, INPUT_PULLUP);  // Кнопка подтянута внутренним резистором
+   pinMode(relay_pin1, OUTPUT);         // Пин реле как выход
+   pinMode(relay_pin2, OUTPUT);
+}
+
+void loop() {
+  butt = !digitalRead(button_pin);    // Считать текущее положение кнопки
+  if (butt == 1 && butt_flag == 0 && millis() - last_press > 150) {
+    butt_flag = 1;         // Запоминаем что нажимали кнопку
+    flag = !flag;          // Инвертируем флажок (Первый проход меняет с 0 на 1 а второй с 1 на 0)
+    last_press = millis(); // Сбрасываем счётчик
+
+    digitalWrite(relay_pin1, flag);    // Подаём сигнал на пин реле
+    digitalWrite(relay_pin2, !flag);
+  }
+  if (butt == 0 && butt_flag == 1) {  // Если кнопка опущенна и до этого была нажата
+    butt_flag = 0;                    // Запоминаем что отпустили кнопку
+  }
+}
