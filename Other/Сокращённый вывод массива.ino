@@ -45,3 +45,20 @@ void setup() {
 void loop() {
   
 }
+/***************Забиваем массив от 0 - 90 с шагом 10*****************/
+int vals[10];
+int count = 0;
+
+void setup() {
+  Serial.begin(9600);
+  for (int &val : vals) {
+    val = count * 10;
+    count++;
+    Serial.println(val);
+  }
+
+}
+void loop() {
+ 
+}
+/**************************************************************************/
