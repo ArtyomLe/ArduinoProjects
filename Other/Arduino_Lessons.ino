@@ -532,3 +532,25 @@ void loop() {
 
   // тут i меняется от 0 до 9
   // и j меняется от 0 до 18
+/*******************************Функции*******************************************/
+
+int potA, potB;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  potA = analogRead(0);
+  potB = analogRead(1);
+  myFunction(potA, potB);
+}
+
+void myFunction(int valA, int valB) {
+  long SUM = valA + valB;
+  Serial.print(valA); Serial.print(" "); Serial.println(valB);
+  Serial.println(SUM);
+  delay(100);
+}
+/*******************************************************************************************/
+
