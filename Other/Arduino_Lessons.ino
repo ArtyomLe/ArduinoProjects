@@ -554,3 +554,20 @@ void myFunction(int valA, int valB) {
 }
 /*******************************************************************************************/
 
+int potA, potB;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  potA = analogRead(0);
+  potB = analogRead(1);
+  Serial.println(myFunction(potA, potB));
+  delay(100);
+}
+
+long myFunction(int valA, int valB) {
+  return valA * valB;
+}
+/***********************************************************************************************/
