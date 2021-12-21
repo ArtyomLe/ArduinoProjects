@@ -570,4 +570,38 @@ void loop() {
 long myFunction(int valA, int valB) {
   return valA * valB;
 }
-/***********************************************************************************************/
+/***********************************Перегруженные функции************************************/
+int c;
+int a;
+float d;
+
+void setup() {
+  float af = 5.5;
+  float bf = 0.25;
+
+  Serial.begin(9600);
+
+  a = sumFunction(10, 20);
+  c = sumFunction(10, 20, 30);
+  d = sumFunction(af, bf);
+  Serial.println(a);
+  Serial.println(c);
+  Serial.println(d);
+}
+
+void loop() {
+}
+
+int sumFunction(int paramA, int paramB) {
+  return (paramA + paramB); 
+}
+
+int sumFunction(int paramA, int paramB, int paramC) {
+  return (paramA + paramB + paramC);
+}
+
+float sumFunction(float paramA, float paramB) {
+  return (paramA + paramB);
+}
+/******************************************************************/
+
