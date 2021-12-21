@@ -603,5 +603,45 @@ int sumFunction(int paramA, int paramB, int paramC) {
 float sumFunction(float paramA, float paramB) {
   return (paramA + paramB);
 }
-/******************************************************************/
+/**********************Возвращение нескольких значений******************************/
 
+struct MyStruct {
+  int valSum;
+  int valSub;
+  int valMul;
+};
+
+void setup() {
+  Serial.begin(9600);
+  MyStruct str;
+  str = compute(3, 4);
+  Serial.println(str.valSum);
+  Serial.println(str.valSub);
+  Serial.println(str.valMul);
+}
+
+void loop() {
+}
+
+MyStruct compute(int val1, int val2) {
+  MyStruct str;
+  str.valSum = val1 + val2;
+  str.valSub = val1 - val2;
+  str.valMul = val1 * val2;
+  return str;
+}
+/**************************Генератор случайных чисел через наводку с A0******************************************************/
+void setup() {
+  Serial.begin(9600);
+ randomSeed(analogRead(0));  // С какого числа начинать отсчитывать случайные числа
+ pinMode(13, OUTPUT);
+}
+
+
+void loop() {
+digitalWrite(13, HIGH);
+delay(random(100, 600));
+digitalWrite(13, LOW);
+delay(random(100, 600));
+}
+/************************************************/
