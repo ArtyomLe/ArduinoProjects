@@ -667,3 +667,23 @@ int myPins[] = {2, 4, 8, 3, 6};
 float Sens[3] = {0.2, 0.4, -8.5};
 // храним символы
 char message[6] = "hello";
+
+/*****************************Прерывания******************************/
+volatile byte count;
+
+void setup() {
+   Serial.begin(9600);
+   pinMode(3, INPUT_PULLUP);
+   attachInterrupt(1, myInterrupt, FALLING);     // Подключить прерывание
+     
+}
+
+void loop() {
+  Serial.println(count);
+  delay(500);
+}
+
+void myInterrupt() {
+    count++;
+}
+/***********************************************************/
