@@ -686,4 +686,23 @@ void loop() {
   Serial.println(counter);  // выводим
   delay(1000);              // ждём
 }
-/***********************************************************/
+/***************************Interrups with flag****************************/
+volatile boolean flag;
+
+void setup() {
+   Serial.begin(9600);
+   pinMode(2, INPUT_PULLUP);
+   attachInterrupt(0, myInterrupt, FALLING);     // Подключить прерывание
+     
+}
+void loop() {
+  if(flag) {
+    Serial.println("INTERRUPT");
+    flag = 0;
+  }
+
+}
+void myInterrupt() {
+    flag = 1;
+}
+/***************************************/
