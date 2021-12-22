@@ -669,21 +669,21 @@ float Sens[3] = {0.2, 0.4, -8.5};
 char message[6] = "hello";
 
 /*****************************Прерывания******************************/
-volatile byte count;
-
+volatile int counter = 0;  // переменная-счётчик
 void setup() {
-   Serial.begin(9600);
-   pinMode(3, INPUT_PULLUP);
-   attachInterrupt(1, myInterrupt, FALLING);     // Подключить прерывание
-     
+  Serial.begin(9600); // открыли порт для связи
+  // подключили кнопку на D2 и GND
+  pinMode(2, INPUT_PULLUP); \
+  // D2 это прерывание 0
+  // обработчик - функция buttonTick
+  // FALLING - при нажатии на кнопку будет сигнал 0, его и ловим
+  attachInterrupt(0, buttonTick, FALLING);
 }
-
+void buttonTick() {
+  counter++;  // + нажатие
+}
 void loop() {
-  Serial.println(count);
-  delay(500);
-}
-
-void myInterrupt() {
-    count++;
+  Serial.println(counter);  // выводим
+  delay(1000);              // ждём
 }
 /***********************************************************/
