@@ -705,4 +705,26 @@ void loop() {
 void myInterrupt() {
     flag = 1;
 }
-/***************************************/
+/*******************Interrups timer********************/
+volatile boolean flag;
+volatile unsigned long myTimer;
+
+void setup() {
+   Serial.begin(9600);
+   pinMode(2, INPUT_PULLUP);
+   attachInterrupt(0, myInterrupt, FALLING);     // Подключить прерывание
+     
+}
+void loop() {
+  if(flag) {
+    Serial.println("INTERRUPT!!!");
+    Serial.println(myTimer);
+    flag = 0;
+  }
+
+}
+void myInterrupt() {
+    flag = 1;
+    myTimer = millis();
+}
+/*********************************************************/
