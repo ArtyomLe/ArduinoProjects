@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
    myButt.tick();
-   if(myButt.isHolded()) {
+   if(myButt.isHolded()) {         // myButt.isHold()   (true if release button after 2 sec)
    Serial.preintln("hold!");
   }
 }
