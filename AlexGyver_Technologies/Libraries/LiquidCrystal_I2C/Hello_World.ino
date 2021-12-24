@@ -1,7 +1,8 @@
 // базовый пример инициализации и вывода текста
-#include <LiquidCrystal_I2C.h>  // подключаем библу
+#include <LiquidCrystal_I2C.h>  // подключаем библиотеку
 // адрес дисплея 0x3f или 0x27
 // размер дисплея 16x2 (поддерживаются и другие, например 20x4)
+// Шина l2C (Arduino: SDA – A4, SCL – A5)  (Wemos: SDA – D2, SCL – D1)
 LiquidCrystal_I2C lcd(0x27, 16, 2);  // адрес, столбцов, строк
 void setup() {
   lcd.init();           // инициализация
