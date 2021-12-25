@@ -1,5 +1,5 @@
 #include <EncButton.h>
-EncButton<EB_TICK, 3> btn1(INPUT_PULLUP);
+EncButton<EB_TICK, 3> btn1(INPUT_PULLUP);  // Используем внутреннюю подтяжку
 
 void setup() {
   pinMode(13, OUTPUT);
