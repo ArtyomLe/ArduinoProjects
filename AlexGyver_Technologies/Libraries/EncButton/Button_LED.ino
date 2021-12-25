@@ -30,4 +30,27 @@ void loop() {
   if(btn2.isClick()) digitalWrite(13, !digitalRead(13)),
   Serial.println("btn 2 switch LED");
 }
-/**************************************************/
+/*******************Change variable***********************/
+#include <EncButton.h>
+EncButton<EB_TICK, 2> btn1(INPUT_PULLUP);
+EncButton<EB_TICK, 3> btn2(INPUT_PULLUP);
+int value = 0;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  btn1.tick();
+  btn2.tick();
+
+  if(btn1.isClick()) {
+    value += 10;
+    Serial.println(value);
+  }
+  if(btn2.isClick()) {
+    value -= 10;
+    Serial.println(value);
+  }
+}
+/***********************************************************/
