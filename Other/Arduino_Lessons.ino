@@ -727,4 +727,51 @@ void myInterrupt() {
     flag = 1;
     myTimer = millis();
 }
-/*********************************************************/
+/******************MILLIS(simple timer)***********************/
+boolean LEDflag = false;
+uint32_t myTimer;
+
+void setup() {
+    pinMode(13, OUTPUT);
+}
+
+void loop() {
+    if(millis() - myTimer >= 1000) {
+      myTymer = millis();
+      digitalWrite(13, LEDflag);
+      LEDflag = !LEDflag;
+ }
+}
+/*******************MILLIS(several tasks)***********************/
+boolean LEDflag = false;
+uint32_t myTimer, myTimer1, myTimer2;
+uint32_t myTimer3;
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(13, OUTPUT);
+}
+
+void loop() {
+    if(millis() - myTimer >= 1000) {     // раз в секунду
+      myTymer = millis();
+      digitalWrite(13, LEDflag);
+      LEDflag = !LEDflag;
+ }
+
+    if(millis() - myTimer1 >= 333) {     // 3 раза в секунду
+      myTimer1 = millis();
+      Serial.println("timer 1");
+ }
+
+    if(millis() - myTimer2 >= 2000) {
+      myTimer2 = millis();
+      Serial.println("timer 2");      
+ }
+
+    if(millis() - myTimer3 >= 5000) {
+      myTimer3 = millis();
+      Serial.println("timer 3");
+ } 
+}
+
