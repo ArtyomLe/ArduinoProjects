@@ -161,4 +161,24 @@ void loop() {
      digitalWrite(10, flag);
  }
 }
-/****************************************************************/
+/**************Включение\отключение  (диод мигает\не мигает)*********************/
+
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static bool flag;
+  btn.tick();
+  if (btn.isClick()) flag = !flag;
+     
+  static uint32_t tmr;
+  if (flag && millis() - tmr >= 300) {
+  tmr = millis();
+  digitalWrite(10, !digitalRead(10));
+ }
+}
+/***************************************************************/
