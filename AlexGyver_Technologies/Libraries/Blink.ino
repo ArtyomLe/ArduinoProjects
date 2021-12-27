@@ -27,4 +27,25 @@ void ledBlink_2() {
     digitalWrite(9, !digitalRead(9));
  }
 }
-/***********2 LEDS мигаем с разной переодичностью*******/
+/*******Мигание происходит с переодичностью в 0.6/0.3 sec********/
+
+void setup() {
+  pinMode(10, OUTPUT);
+
+}
+
+void loop() {
+  static uint32_t tmr;
+  static bool flag;
+
+  uint32_t period;
+  if (flag) period = 300;
+  else period = 600;
+
+  if (millis() - tmr >= period) {
+    tmr - millis();
+    digitalWrite(10, !digitalRead(10));
+    flag = !flag;
+ }
+}
+/*******Мигание происходит с переодичностью в 0.6/0.3 sec********/
