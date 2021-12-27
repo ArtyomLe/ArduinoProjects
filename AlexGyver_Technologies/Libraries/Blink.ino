@@ -124,4 +124,22 @@ void loop() {
     flag = false;
  }
 }
-/*************************************************************************************/
+/*********************Мигаем однократо заданное кол-во раз (10)*********************************/
+
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  static byte counter = 0;
+
+  if (counter < 10 && millis() - tmr >= 400) {
+    tmr = millis();
+    digitalWrite(10, !digitalRead(10));
+    counter++;
+ }
+}
