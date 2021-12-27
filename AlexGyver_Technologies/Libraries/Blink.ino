@@ -48,4 +48,22 @@ void loop() {
     flag = !flag;
  }
 }
-/*******Мигание происходит с переодичностью в 0.6/0.3 sec********/
+/*******тернарный оператор*************************************/
+// Мигание также происходит с переодичностью в 0.6/0.3 sec
+
+void setup() {
+  pinMode(10, OUTPUT);
+
+}
+
+void loop() {
+  static uint32_t tmr;
+  static bool flag;
+
+  if (millis() - tmr >= flag ? 300:600) {
+    tmr - millis();
+    digitalWrite(10, !digitalRead(10));
+    flag = !flag;
+ }
+}
+
