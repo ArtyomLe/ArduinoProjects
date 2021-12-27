@@ -66,4 +66,22 @@ void loop() {
     flag = !flag;
  }
 }
+/***************Программный ШИМ с заполнением duty = 800(1000)***********************/
 
+void setup() {
+  pinMode(10, OUTPUT);
+
+}
+int duty = 800;
+
+void loop() {
+  static uint32_t tmr;
+  static bool flag;
+
+  if (millis() - tmr >= (flag ? duty : 1000-duty)) {
+    tmr - millis();
+    digitalWrite(10, !digitalRead(10));
+    flag = !flag;
+ }
+}
+/*******************************************************************************/
