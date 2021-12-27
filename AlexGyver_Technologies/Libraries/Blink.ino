@@ -181,4 +181,21 @@ void loop() {
   digitalWrite(10, !digitalRead(10));
  }
 }
-/***************************************************************/
+/***************************Плавное мигание************************/
+
+void setup() {
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  static int dir = 5;
+  static int duty = 0;
+  if (millis() - tmr >= 20) {
+    tmr = millis();
+    duty += dir;
+    if (duty >= 255 || duty <= 0) dir = -dir;    // меняем направление
+    analogWrite(10, duty);
+ }
+}
+/**********************************************************/
