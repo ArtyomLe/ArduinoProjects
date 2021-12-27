@@ -198,4 +198,21 @@ void loop() {
     analogWrite(10, duty);
  }
 }
-/**********************************************************/
+/************************Плавное мигание 2 ver.***************************/
+
+void setup() {
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  static int dir = 5;
+  static int duty = 0;
+  if (millis() - tmr >= 20) {
+    tmr = millis();
+    duty += dir;
+    if (duty >= 255 || duty <= 0) dir = -dir;            // меняем напровление
+    analogWrite(10, ((long)duty * duty + 255) >> 8);
+ }
+}
+/*******************************************************************/
