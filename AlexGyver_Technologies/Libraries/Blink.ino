@@ -314,6 +314,27 @@ void loop() {
 }
 
 /********************* Добавляем switch ****************************/
+/******************************* Четыре режима **********************/
+
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  static byte mode = 0;
+  btn.tick();
+  if (btn.isClick()) {
+    mode++;
+    if (mode >= 4) mode = 0;
+//  if (++mode >= 4) mode = 0;  // Укороченная версия (убираем строку mode++;)
+    Serial.println(mode);
+ }
+}
+
+/********************* Добавляем switch ****************************/
 
 #include <EncButton.h>
 EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
@@ -337,7 +358,7 @@ void loop() {
  }
 }
 
-void task1() {
+void task1() {                       // мигаем раз в секунду на 100% яркости
   static uint32_t tmr;
   if (millis() - tmr >= 500) {
     tmr = millis();
@@ -346,12 +367,29 @@ void task1() {
     digitalWrite(10, flag);
  }
 }
-void task2() {
 
+void task2() {                       // мигаем два раза в секунду на 50% яркости
+  static uint32_t tmr;
+  if (millis() - tmr >= 250) {
+    tmr = millis();
+    static bool flag;
+    flag = !flag;
+    digitalWrite(10, flag ? 128 : 0);
+ }
 }
-void task3() {
 
+void task3() {                       // millis раз в секунду
+  static uint32_t tmr;
+  if (millis() - tmr >= 1000) {
+    tmr = millis();
+    Serial.println(millis());
+ }
 }
-void task4() {
 
+void task4() {                      // Hello World 3 раза в секунду                  
+  static uint32_t tmr;
+  if (millis() - tmr >= 333) {
+    tmr = millis();
+    Serial.println("Hello, World!");
+ }
 }
