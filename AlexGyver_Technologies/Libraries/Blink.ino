@@ -293,6 +293,65 @@ void loop() {
     tmr = millis();
  }
 }
-/********************************************************************************************/
-      
-      
+/******************************* Четыре режима **********************/
+
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  static byte mode = 0;
+  btn.tick();
+  if (btn.isClick()) {
+    mode++;
+    if (mode >= 4) mode = 0;
+//  if (++mode >= 4) mode = 0;  // Укороченная версия (убираем строку mode++;)
+    Serial.println(mode);
+ }
+}
+
+/********************* Добавляем switch ****************************/
+
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static byte mode = 0;
+  btn.tick();
+  if (btn.isClick()) {
+  if (++mode >= 4) mode = 0;
+ }
+ switch (mode) {
+    case 0: task1(); break;
+    case 1: task2(); break;
+    case 2: task3(); break;
+    case 3: task4(); break;
+ }
+}
+
+void task1() {
+  static uint32_t tmr;
+  if (millis() - tmr >= 500) {
+    tmr = millis();
+    static bool flag;
+    flag = !flag;
+    digitalWrite(10, flag);
+ }
+}
+void task2() {
+
+}
+void task3() {
+
+}
+void task4() {
+
+}
