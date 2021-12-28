@@ -215,4 +215,27 @@ void loop() {
     analogWrite(10, ((long)duty * duty + 255) >> 8);     // crt gamma
  }
 }
-/*******************************************************************/
+/***************************Отработка нажатий кнопки***************************/
+void setup() {
+  Serial.print(9600);
+  pinMode(3, INPUT_PULLUP);
+}
+
+void loop() {
+  static bool flag = false;
+  static uint32_t tmr;                                  // таймер дребезга   
+  bool state = !digitalRead(3);
+  
+  if (state && !flag && millis() - tmr > 100) {         // кнопка нажата и флаг не поднят
+    flag = true;                                        // поднимаем флаг
+    tmr = millis();
+    Serial.println("Click!"); 
+}
+
+  if (!state && flag) {                                 // кнопка не нажата и флаг поднят
+    flag = false;                                       // опускаем флаг
+    tmr = millis();
+ }
+}
+/****************************************************************/
+
