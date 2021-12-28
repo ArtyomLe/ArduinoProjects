@@ -189,8 +189,8 @@ void setup() {
 
 void loop() {
   static uint32_t tmr;
-  static int dir = 5;
-  static int duty = 0;
+  static int dir = 5;                             // Переменная направления +-
+  static int duty = 0;                            // Переменная заполнения
   if (millis() - tmr >= 20) {
     tmr = millis();
     duty += dir;
@@ -206,13 +206,13 @@ void setup() {
 
 void loop() {
   static uint32_t tmr;
-  static int dir = 5;
-  static int duty = 0;
+  static int dir = 5;                                    // Переменная направления +-
+  static int duty = 0;                                   // Переменная заполнения
   if (millis() - tmr >= 20) {
     tmr = millis();
     duty += dir;
-    if (duty >= 255 || duty <= 0) dir = -dir;            // меняем напровление
-    analogWrite(10, ((long)duty * duty + 255) >> 8);
+    if (duty >= 255 || duty <= 0) dir = -dir;            // меняем напрaвление
+    analogWrite(10, ((long)duty * duty + 255) >> 8);     // crt gamma
  }
 }
 /*******************************************************************/
