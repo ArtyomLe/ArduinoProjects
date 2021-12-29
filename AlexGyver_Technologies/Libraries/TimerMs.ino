@@ -73,3 +73,28 @@ void loop() {
 // пин (10) 1 раз в секунду
 // пин (9)  5 раз в секунду
 // каждые 2 секунды принт random
+
+/****************Step 4***********************/
+
+#include <TimerMs.h>                     
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  static TimerMs tmr1(500, true);
+  static TimerMs tmr2(100, true);
+  static TimerMs trm3(2000, true);
+
+
+  if (tmr1.tick()) digitalWrite(10, !digitalRead(10));
+  if (tmr2.tick()) digitalWrite(9,  !digitalRead(9));
+  if (tmr3.tick()) Serial.println(random(100));
+}
+
+// пин (10) 1 раз в секунду
+// пин (9)  5 раз в секунду
+// каждые 2 секунды принт random
