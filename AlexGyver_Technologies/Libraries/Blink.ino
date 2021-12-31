@@ -43,7 +43,7 @@ void loop() {
   else period = 600;
 
   if (millis() - tmr >= period) {
-    tmr - millis();
+    tmr = millis();
     digitalWrite(10, !digitalRead(10));
     flag = !flag;
  }
