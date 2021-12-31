@@ -60,8 +60,8 @@ void loop() {
   static uint32_t tmr;
   static bool flag;
 
-  if (millis() - tmr >= flag ? 300:600) {
-    tmr - millis();
+  if (millis() - tmr >= (flag ? 1200:300)) {
+    tmr = millis();
     digitalWrite(10, !digitalRead(10));
     flag = !flag;
  }
