@@ -105,6 +105,7 @@ void loop() {
 // Однократное действие спустя какое то время после старта (2 sec.)
 // и последующее возобновление через нажатие кнопки.
 #include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
 
 void setup() {
   pinMode(10, OUTPUT);
