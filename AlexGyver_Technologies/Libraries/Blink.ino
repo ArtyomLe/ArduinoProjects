@@ -155,7 +155,6 @@ void loop() {
 /*********************Мигаем однократо заданное кол-во раз (10)*********************************/
 
 #include <EncButton.h>
-EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
 
 void setup() {
   pinMode(10, OUTPUT);
@@ -171,6 +170,30 @@ void loop() {
     counter++;
  }
 }
+/************************************Мигаем  заданное кол-во раз (10) с последующим возобновлением через кнопку**********************/
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+int counter = 0; 
+
+void setup() {
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  
+  btn.tick();
+  if (btn.isClick()) {
+    counter = 0;
+  }
+  
+  if (counter < 10 && millis() - tmr >= 400) {
+    tmr = millis();
+    digitalWrite(10, !digitalRead(10));
+    counter++;
+  }
+}
+
 /***********************************************************/
 // Включение\отключение состояния процесса кнопкой
 
