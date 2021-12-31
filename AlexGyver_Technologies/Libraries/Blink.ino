@@ -126,6 +126,32 @@ void loop() {
     flag = false;
  }
 }
+
+/***********Однократное действие спустя какое то время (противоположенное состояние 2 диодов)****************************/
+#include <EncButton.h>
+EncButton<EB_TICK, 3> btn(INPUT_PULLUP);
+
+void setup() {
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  static bool flag = true;
+
+  btn.tick();
+  if(btn.isClick()) {
+    flag = true;
+    tmr = millis();
+  }
+  if (flag && millis() - tmr >= 2000) {
+    digitalWrite(10, !digitalRead(10));
+    digitalWrite(9, !digitalRead(10)); 
+    flag = false;
+  }
+}
+
 /*********************Мигаем однократо заданное кол-во раз (10)*********************************/
 
 #include <EncButton.h>
