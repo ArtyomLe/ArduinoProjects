@@ -266,6 +266,34 @@ void loop() {
     analogWrite(10, ((long)duty * duty + 255) >> 8);     // crt gamma
  }
 }
+/***********************************Сравнение версий***************************************/
+void setup() {
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+}
+
+void loop() {
+  static uint32_t tmr;
+  static int dir = 5;
+  static int duty = 0;
+  if (millis() - tmr >= 20) {
+    tmr = millis();
+    duty += dir;
+    if (duty >= 255 || duty <= 0) dir = -dir;
+    analogWrite(9, duty);
+  }
+  static uint32_t tmr_1;
+  static int dir_1 = 5;
+  static int duty_1 = 0;
+  if (millis() - tmr_1 >= 20) {
+    tmr_1 = millis();
+    duty_1 += dir_1;
+    if (duty_1 >= 255 || duty_1 <= 0 ) dir_1 = -dir_1;
+    analogWrite(10, ((long)duty_1 * duty_1 + 255) >> 8);
+  }
+}
+
+/******************************************************************************************/
 /***************************Отработка нажатий кнопки***************************/
 void setup() {
   Serial.print(9600);
