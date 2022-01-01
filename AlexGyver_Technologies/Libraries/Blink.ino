@@ -224,7 +224,7 @@ void setup() {
 void loop() {
   static bool flag;
   btn.tick();
-  if (btn.isClick()) flag = !flag;
+  if (btn.isClick()) flag = !flag;  //Нажатие кнопки меняет состояние флага
      
   static uint32_t tmr;
   if (flag && millis() - tmr >= 300) {
