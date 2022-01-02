@@ -318,7 +318,7 @@ void loop() {
 }
 /*****************************Отработка нажатий кнопки с удержанием**************/
 void setup() {
-  Serial.print(9600);
+  Serial.begin(9600);
   pinMode(3, INPUT_PULLUP);
 }
 
