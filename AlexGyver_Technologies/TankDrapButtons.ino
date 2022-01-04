@@ -2,6 +2,7 @@
 // Controls a robotic tank using a PS2 joystick, using D-pad buttons
 // based on an example using the PS2X library by Bill Porter 2011
 // All text above must be included in any redistribution.
+// https://www.instructables.com/Arduino-Robot-With-PS2-Controller-PlayStation-2-Jo/
 
 // include libraries
 #include <PS2X_lib.h>
