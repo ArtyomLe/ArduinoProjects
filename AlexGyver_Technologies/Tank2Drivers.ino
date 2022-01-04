@@ -42,7 +42,25 @@ void setup() {
 
   // подрубаем геймпад
   ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, false, false);
+
+}
+
+void loop() {
+ 
+  // читаем геймпад
+  bool success = ps2x.read_gamepad(false, 0);               // читаем ресивер джойстика
+  ps2x.reconfig_gamepad();                                  // костыль https://stackoverflow.com/questions/46493222/why-arduino-needs-to-be-restarted-after-ps2-controller-communication-in-arduino
   
+  if (success) {
+    // преобразуем стики от 0..255 к -255, 255
+    int LX = map(ps2x.Analog(PSS_LX), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LX), 256, 0, -255, 255);
+    int LY = map(ps2x.Analog(PSS_LY), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LY), 256, 0, -255, 255);
+
+   if (LX == -1 && LY == -1 ) {                              // Если едет правый борт ver2.
+     LX = 0;
+     LY = 0;
+    }
+      
   // Show up stick values via Serial_print (при нажатии L1 или R1 выводятся состояния обоих аналоговых стиков.)
   if(ps2x.Button(PSB_L1) || ps2x.Button(PSB_R1))            // print stick values if either is TRUE
   {
@@ -55,22 +73,6 @@ void setup() {
     Serial.print(“,”);
     Serial.println(ps2x.Analog(PSS_RX), DEC); 
   } 
-}
-
-void loop() {
-  // читаем геймпад
-  bool success = ps2x.read_gamepad(false, 0);  // читаем ресивер джойстика
-  ps2x.reconfig_gamepad();      // костыль https://stackoverflow.com/questions/46493222/why-arduino-needs-to-be-restarted-after-ps2-controller-communication-in-arduino
-  
-  if (success) {
-    // преобразуем стики от 0..255 к -255, 255
-    int LX = map(ps2x.Analog(PSS_LX), 255, 0, -255, 255);
-    int LY = map(ps2x.Analog(PSS_LY), 255, 0, -255, 255);
-
-    if (LX == -1 && LY == -1 ) {          // Если едет правый борт 
-      LX = 0;
-      LY = 0;
-    }
 
     // танковая схема
     int dutyR = LY + LX;
