@@ -6,7 +6,7 @@
 #define CAM_MIN 20                                                                 // ===============
 #define CAM_MAX 160                                                                // ===============
 
-// пины драйвера
+// пины драйвера и серво
 #define MOT_RA 2
 #define MOT_RB 3
 #define MOT_LA 4
@@ -22,6 +22,7 @@
 // ===========================
 #include <Servo.h>                                                                // ===============
 Servo cam;                                                                        // ===============
+
 #include <GyverMotor.h>
 // (тип, пин, ШИМ пин, уровень)
 GMotor motorR(DRIVER2WIRE, MOT_RA, MOT_RB, HIGH);
@@ -29,7 +30,8 @@ GMotor motorL(DRIVER2WIRE, MOT_LA, MOT_LB, HIGH);
 
 #include <PS2X_lib.h>
 PS2X ps2x;
-позиция привода (градусы * 10)                                                    // ===============
+
+// позиция привода (градусы * 10)                                                 // ===============
 int camP = 0;                                                                     // ===============
 
 void setup() {
@@ -78,14 +80,15 @@ void loop() {
     }
   //=====================================================
     // преобразуем стики от 0..255 к -255, 255
-    int LX = map(ps2x.Analog(PSS_RX), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LX), 256, 0, -255, 255);
-    int LY = map(ps2x.Analog(PSS_RY), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LY), 256, 0, -255, 255);
+    int LX = map(ps2x.Analog(PSS_RX), 255, 0, -255, 255); 
+    int LY = map(ps2x.Analog(PSS_RY), 255, 0, -255, 255);  
 
-   if (RX == -1 && RY == -1 ) {                              // Если едет правый борт ver2.
+   if (RX == -1 && RY == -1 ) {                              // Если едет правый борт 
      RX = 0;
      RY = 0;
     }
   //======================================================    
+  
   // Show up stick values via Serial_print (при нажатии L1 или R1 выводятся состояния обоих аналоговых стиков.)
   if(ps2x.Button(PSB_L1) || ps2x.Button(PSB_R1))            // print stick values if either is TRUE
   {
