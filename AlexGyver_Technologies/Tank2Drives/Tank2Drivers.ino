@@ -11,7 +11,7 @@
 #define MOT_RB 3
 #define MOT_LA 4
 #define MOT_LB 5
-#define SERVO_CAM 8                                                                // ===============
+#define SERVO_CAM 9                                                                // ===============
 
 // пины ресивера ps2
 #define PS2_DAT A0
@@ -80,8 +80,8 @@ void loop() {
     }
   //=====================================================
     // преобразуем стики от 0..255 к -255, 255
-    int LX = map(ps2x.Analog(PSS_RX), 255, 0, -255, 255); 
-    int LY = map(ps2x.Analog(PSS_RY), 255, 0, -255, 255);  
+    int RX = map(ps2x.Analog(PSS_RX), 255, 0, -255, 255); 
+    int RY = map(ps2x.Analog(PSS_RY), 255, 0, -255, 255);  
 
    if (RX == -1 && RY == -1 ) {                              // Если едет правый борт 
      RX = 0;
@@ -92,13 +92,13 @@ void loop() {
   // Show up stick values via Serial_print (при нажатии L1 или R1 выводятся состояния обоих аналоговых стиков.)
   if(ps2x.Button(PSB_L1) || ps2x.Button(PSB_R1))            // print stick values if either is TRUE
   {
-    Serial.print(“Stick Values:”);
+    Serial.print("Stick Values:");
     Serial.print(ps2x.Analog(PSS_LY), DEC);                  //Left stick, Y axis. Other options: LX, RY, RX  
-    Serial.print(“,”);
+    Serial.print(",");
     Serial.print(ps2x.Analog(PSS_LX), DEC); 
-    Serial.print(“,”);
+    Serial.print(",");
     Serial.print(ps2x.Analog(PSS_RY), DEC); 
-    Serial.print(“,”);
+    Serial.print(",");
     Serial.println(ps2x.Analog(PSS_RX), DEC); 
   } 
  //=======================================================
