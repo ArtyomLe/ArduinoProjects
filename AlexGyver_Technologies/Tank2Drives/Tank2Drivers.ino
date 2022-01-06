@@ -6,6 +6,7 @@
 #define MOT_RB 3
 #define MOT_LA 4
 #define MOT_LB 5
+//#define SERVO_CAM 8
 
 // пины ресивера ps2
 #define PS2_DAT A0
@@ -14,6 +15,8 @@
 #define PS2_CLK A3
 
 // ===========================
+//#include <Servo.h>
+//Servo cam;
 #include <GyverMotor.h>
 // (тип, пин, ШИМ пин, уровень)
 GMotor motorR(DRIVER2WIRE, MOT_RA, MOT_RB, HIGH);
@@ -21,9 +24,14 @@ GMotor motorL(DRIVER2WIRE, MOT_LA, MOT_LB, HIGH);
 
 #include <PS2X_lib.h>
 PS2X ps2x;
+  // позиция привода (градусы * 10)
+  //int camP = 0;
 
 void setup() {
   Serial.begin(9600);
+  
+  //cam.attach(SERVO_CAM);      // подключаем
+  //cam.write(camP);            // ставим на начальные позиции
 
   motorR.setMode(AUTO);
   motorL.setMode(AUTO);
