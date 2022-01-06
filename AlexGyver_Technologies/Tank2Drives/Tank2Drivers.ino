@@ -60,13 +60,21 @@ void loop() {
   ps2x.reconfig_gamepad();                                  // костыль https://stackoverflow.com/questions/46493222/why-arduino-needs-to-be-restarted-after-ps2-controller-communication-in-arduino
   
   if (success) {
+   /* 
+    // таймер на 30 мс (30 раз в секунду)
+    static uint32_t tmr;
+    if (success && millis() - tmr >= 30) {
+      tmr = millis();
+      
+    camP += map(ps2x.Analog(PSS_RX), 0, 255, MAX_ARM_SPEED, -MAX_ARM_SPEED);
+    */
     // преобразуем стики от 0..255 к -255, 255
-    int LX = map(ps2x.Analog(PSS_LX), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LX), 256, 0, -255, 255);
-    int LY = map(ps2x.Analog(PSS_LY), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LY), 256, 0, -255, 255);
+    int LX = map(ps2x.Analog(PSS_RX), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LX), 256, 0, -255, 255);
+    int LY = map(ps2x.Analog(PSS_RY), 255, 0, -255, 255);   // Если едет правый борт ver1.  map(ps2x.Analog(PSS_LY), 256, 0, -255, 255);
 
-   if (LX == -1 && LY == -1 ) {                              // Если едет правый борт ver2.
-     LX = 0;
-     LY = 0;
+   if (RX == -1 && RY == -1 ) {                              // Если едет правый борт ver2.
+     RX = 0;
+     RY = 0;
     }
       
   // Show up stick values via Serial_print (при нажатии L1 или R1 выводятся состояния обоих аналоговых стиков.)
