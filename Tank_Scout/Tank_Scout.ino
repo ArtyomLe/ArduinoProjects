@@ -3,6 +3,10 @@
 #define MIN_DUTY 120         // мин. сигнал, при котором мотор начинает вращение
 #define MAX_CAM_SPEED 50     // скорость поворота серво привода                                                      
 
+// датчик растоянния HC-SR04
+#define HC_TRIG 6
+#define HC_ECHO 7
+
 // пределы поворота серво
 #define CAM_MIN 60                                                                 
 #define CAM_MAX 1800                                                                
@@ -37,7 +41,10 @@ int camP = 900;
 
 void setup() {
   Serial.begin(9600);
-  
+
+  pinMode(HC_TRIG, OUTPUT);
+  pinMode(HC_ECHO, INPUT);
+    
   cam.attach(SERVO_CAM);      // подключаем серво                                 
   cam.write(camP);            // ставим на начальные позиции                      
 
@@ -62,7 +69,15 @@ void setup() {
 }
 
 void loop() {
- 
+  
+  // Получаем расстояние HC-CR04
+  static uint32_t tmr;
+  if (millis() - tmr >= 200) {
+    tmr = millis();
+    float dist = getDist();       // Получаем расстояние 
+    Serial.println(dist);         // Выводим в порт
+  }
+  
   // читаем геймпад
   bool success = ps2x.read_gamepad(false, 0);               // читаем ресивер джойстика
   ps2x.reconfig_gamepad();                                  // костыль https://stackoverflow.com/questions/46493222/why-arduino-needs-to-be-restarted-after-ps2-controller-communication-in-arduino
@@ -116,4 +131,18 @@ void loop() {
     motorR.setSpeed(0);
     motorL.setSpeed(0);
   }
+}
+
+float getDist() {
+  // Импульс 10 мкс
+  digitalWrite(HC_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(HC_TRIG, LOW);
+
+  // Измеряем время ответного импульса
+  uint32_t us = pulseIn(HC_ECHO, HIGH);
+
+  // считаем растояние и возвращаем
+  return (us / 58.2);
+  
 }
