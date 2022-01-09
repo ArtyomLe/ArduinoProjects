@@ -12,7 +12,7 @@ void loop() {
 
   Serial.println("Devices found: ");
 
-  for(address = 1; address < 127; adress++ ) {
+  for(address = 1; address < 127; address++ ) {
     Wire.beginTransmission(address);
     error = Wire.endTransmission();
 
