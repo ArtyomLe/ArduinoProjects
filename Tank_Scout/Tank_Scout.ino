@@ -1,5 +1,3 @@
-
-
 #define MIN_DUTY 120         // мин. сигнал, при котором мотор начинает вращение
 #define MAX_CAM_SPEED 50     // скорость поворота серво привода                                                      
 
@@ -25,28 +23,34 @@
 #define PS2_CLK A3
 
 
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
+
 #include <Servo.h>                                                               
 Servo cam;                                                                       
 
 #include <GyverMotor.h>
-// (тип, пин, ШИМ пин, уровень)
-GMotor motorR(DRIVER2WIRE, MOT_RA, MOT_RB, HIGH);
+GMotor motorR(DRIVER2WIRE, MOT_RA, MOT_RB, HIGH);   // (тип, пин, ШИМ пин, уровень)
 GMotor motorL(DRIVER2WIRE, MOT_LA, MOT_LB, HIGH);
 
 #include <PS2X_lib.h>
 PS2X ps2x;
+                                                 
+int camP = 900;                                     // позиция привода (градусы * 10)                                                             
 
-// позиция привода (градусы * 10)                                                 
-int camP = 900;                                                                     
 
 void setup() {
   Serial.begin(9600);
 
-  pinMode(HC_TRIG, OUTPUT);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);        // подключаем OLED
+
+  pinMode(HC_TRIG, OUTPUT);   
   pinMode(HC_ECHO, INPUT);
     
-  cam.attach(SERVO_CAM);      // подключаем серво                                 
-  cam.write(camP);            // ставим на начальные позиции                      
+  cam.attach(SERVO_CAM);                            // подключаем серво                                 
+  cam.write(camP);                                  // ставим на начальные позиции                      
 
   motorR.setMode(AUTO);
   motorL.setMode(AUTO);
@@ -69,23 +73,15 @@ void setup() {
 }
 
 void loop() {
-  
-  // Получаем расстояние HC-CR04
-  static uint32_t tmr;
-  if (millis() - tmr >= 200) {
-    tmr = millis();
-    float dist = getDist();       // Получаем расстояние 
-    Serial.println(dist);         // Выводим в порт
-  }
-  
+
   // читаем геймпад
   bool success = ps2x.read_gamepad(false, 0);               // читаем ресивер джойстика
   ps2x.reconfig_gamepad();                                  // костыль https://stackoverflow.com/questions/46493222/why-arduino-needs-to-be-restarted-after-ps2-controller-communication-in-arduino
   
   if (success) { 
-    // таймер на 30 мс (30 раз в секунду)
+    // таймер на 10 мс (100 раз в секунду)
     static uint32_t tmr;
-    if (success && millis() - tmr >= 30) {
+    if (success && millis() - tmr >= 10) {
       tmr = millis();
       
     camP += map(ps2x.Analog(PSS_LX), 0, 255, MAX_CAM_SPEED, -MAX_CAM_SPEED);
@@ -102,7 +98,7 @@ void loop() {
      RX = 0;
      RY = 0;
     }
-    
+
     // танковая схема
     int dutyR = RY + RX;
     int dutyL = RY - RX;
@@ -116,6 +112,24 @@ void loop() {
     // проблема с геймпадом - остановка
     motorR.setSpeed(0);
     motorL.setSpeed(0);
+  }
+
+    
+  // Получаем расстояние HC-CR04
+  static uint32_t tmr1;
+  if (millis() - tmr1 >= 2000) {
+    tmr1 = millis();
+    int dist = getDist();       // Получаем расстояние 
+    
+    display.display();
+    display.clearDisplay();
+    display.setTextColor(WHITE);
+    display.setTextSize(4);
+    display.setCursor(14,2);
+    display.print(dist);
+    display.setTextSize(2);
+    display.setCursor(93,16);
+    display.print("cm");
   }
 }
 
@@ -132,37 +146,3 @@ float getDist() {
   return (us / 58.2);
   
 }
-
-
-/*
-//==============OLED addition=====================
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-#define OLED_RESET 4
-Adafruit_SSD1306 display(OLED_RESET);
-
-void setup() {
-
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-}
-
-void loop() {
-
-  Distance();
-  display.display();
-}
-
-void Distance() {
-
-  delay(2000);
-  
-  display.clearDisplay();
-  display.setTextColor(WHITE);
-  display.setTextSize(1);
-  display.setCursor(0,4);
-  display.print("Distance:    ");
-  display.print(dist);
-  display.print(" cm");
-}
-*/
