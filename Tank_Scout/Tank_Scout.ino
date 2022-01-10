@@ -102,21 +102,7 @@ void loop() {
      RX = 0;
      RY = 0;
     }
-  //======================================================    
-  
-  // Show up stick values via Serial_print (при нажатии L1 или R1 выводятся состояния обоих аналоговых стиков.)
-  if(ps2x.Button(PSB_L1) || ps2x.Button(PSB_R1))            // print stick values if either is TRUE
-  {
-    Serial.print("Stick Values:");
-    Serial.print(ps2x.Analog(PSS_LY), DEC);                  //Left stick, Y axis. Other options: LX, RY, RX  
-    Serial.print(",");
-    Serial.print(ps2x.Analog(PSS_LX), DEC); 
-    Serial.print(",");
-    Serial.print(ps2x.Analog(PSS_RY), DEC); 
-    Serial.print(",");
-    Serial.println(ps2x.Analog(PSS_RX), DEC); 
-  } 
- //=======================================================
+    
     // танковая схема
     int dutyR = RY + RX;
     int dutyL = RY - RX;
