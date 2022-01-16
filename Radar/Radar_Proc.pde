@@ -10,6 +10,7 @@
  */
 
 // IMPORTANT! to check which serial port connected to arduino board and correct in raw 34
+// After uploading arduino sketch to board now can run this sketch on processing to see the radar screen
 
 import processing.serial.*; // imports library for serial communication
 import java.awt.event.KeyEvent; // imports library for reading the data from the serial port
