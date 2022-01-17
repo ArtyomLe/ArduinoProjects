@@ -33,7 +33,7 @@ void loop() {
   if (millis() - tmr >= 20) {                 // Instead of delay function
     tmr = millis();
     val += dir;                               // Each step of servo
-    if (val >= 165 || val <= 15) dir = -dir;  // Servo rotation range
+    if (val >= 165 || val <= 15) dir = -dir;  // Servo rotation degree range (15,165)
     myservo.write(val)                        
     
     distance = calculateDistance();           // Calls a function for calculating the distance measured by the Ultrasonic sensor for each degree
@@ -49,11 +49,11 @@ void loop() {
 // Function for calculating the distance measured by the Ultrasonic sensor
 int calculateDistance() { 
  
-  digitalWrite(trigPin, HIGH);           // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite (trigPin, HIGH);           // Sets the trigPin on HIGH state for 10 micro seconds
   delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
+  digitalWrite (trigPin, LOW);
   
-  duration = pulseIn(echoPin, HIGH);     // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn (echoPin, HIGH);     // Reads the echoPin, returns the sound wave travel time in microseconds
   distance = duration / 58.2;
   return distance;
 }
