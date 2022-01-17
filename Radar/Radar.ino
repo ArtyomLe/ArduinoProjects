@@ -12,6 +12,7 @@ const int echoPin = 11;
 // Variables for the duration and the distance
 uint32_t duration;
 int distance;
+//int distFilt = 0;                  // Filtration variable
 
 Servo myServo;                     // Creates a servo object for controlling the servo motor
 
@@ -26,7 +27,7 @@ void setup() {
   int val = 15;
   int dir = 1;
 }
-
+                            
 
 void loop() {
 
@@ -38,10 +39,13 @@ void loop() {
     
     distance = calculateDistance();           // Calls a function for calculating the distance measured by the Ultrasonic sensor for each degree
   
+   //distFilt += (distance - distFilt) * 0.2;   // Simple filtration function
+    
     Serial.print(val);                        // Sends the current degree into the Serial Port
     Serial.print(",");                        // Sends addition character right next to the previous value needed later in the Processing IDE for indexing
     Serial.print(distance);                   // Sends the distance value into the Serial Port
     Serial.print(".");                        // Sends addition character right next to the previous value needed later in the Processing IDE for indexing
+    Serial.println(distFilt);                 // Display with simple filtration
   }
 }
 
