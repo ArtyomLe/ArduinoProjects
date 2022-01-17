@@ -14,7 +14,7 @@ int distance;
 Servo myServo;                     // Creates a servo object for controlling the servo motor
 
   uint32_t tmr;
-  int i = 10;                      // Set angle to start from 
+  int i = 15;                      // Set angle to start from 
   int dir = 1;                     // Set step (increase number = high rotation)
 
 void setup() {
@@ -27,10 +27,10 @@ void setup() {
 
 void loop() {
 
-  if (millis() - tmr >= 30) {                 // Instead of delay function (increase number = low rotation)
+  if (millis() - tmr >= 20) {                 // Instead of delay function (increase number = low rotation)
     tmr = millis();
     i += dir;                                 // Each step of servo
-    if (i >= 170 || i <= 10) dir = -dir;      // Set servo rotation degree range
+    if (i >= 165 || i <= 15) dir = -dir;      // Set servo rotation degree range
     myServo.write(i);                        
     
     distance = calculateDistance();           // Calls a function for calculating the distance measured by the Ultrasonic sensor for each degree
