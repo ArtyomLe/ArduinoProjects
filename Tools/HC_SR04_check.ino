@@ -1,5 +1,5 @@
-#define HC_TRIG 3
-#define HC_ECHO 2
+#define HC_TRIG 10
+#define HC_ECHO 11
 
 void setup() {
   Serial.begin(9600);       
@@ -14,7 +14,7 @@ void loop() {
 }
 
 float getDist() {
-  // импульс 10 мкс
+
   digitalWrite(HC_TRIG, HIGH);
   delayMicroseconds(10);
   digitalWrite(HC_TRIG, LOW);
