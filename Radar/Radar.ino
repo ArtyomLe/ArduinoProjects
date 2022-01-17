@@ -10,7 +10,7 @@ const int trigPin = 10;
 const int echoPin = 11;
 
 // Variables for the duration and the distance
-long duration;
+uint32_t duration;
 int distance;
 
 Servo myServo;                     // Creates a servo object for controlling the servo motor
@@ -48,18 +48,18 @@ void loop() {
 
 // Function for calculating the distance measured by the Ultrasonic sensor
 int calculateDistance() { 
-  
-  digitalWrite(trigPin, LOW); 
-  delayMicroseconds(2);
-  // Sets the trigPin on HIGH state for 10 micro seconds
-  digitalWrite(trigPin, HIGH); 
+ 
+  digitalWrite(trigPin, HIGH);           // Sets the trigPin on HIGH state for 10 micro seconds
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-  duration = pulseIn(echoPin, HIGH); // Reads the echoPin, returns the sound wave travel time in microseconds
-  distance= duration*0.034/2;
+  
+  duration = pulseIn(echoPin, HIGH);     // Reads the echoPin, returns the sound wave travel time in microseconds
+  distance = duration / 58.2;
   return distance;
 }
 
+
+// ====================================================ORIGINAL=================================================
 /*
 #include <Servo.h>
 Servo myservo;
@@ -85,5 +85,19 @@ void loop() {
     Serial.print(".");                        // Sends addition character right next to the previous value needed later in the Processing IDE for indexing
   }
 }
-*/
 
+// Function for calculating the distance measured by the Ultrasonic sensor
+int calculateDistance() { 
+  
+  digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2);
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH); 
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH); // Reads the echoPin, returns the sound wave travel time in microseconds
+  distance= duration*0.034/2;
+  return distance;
+}
+*/
+//====================================================================================================================
