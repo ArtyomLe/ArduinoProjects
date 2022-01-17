@@ -15,6 +15,6 @@ void loop() {
     tmr = millis();
     val += dir;                             
     if (val >= 180|| val <= 0) dir = -dir;  // 0 - 180 degree
-    myservo.write(val)                      
+    myservo.write(val);                      
   }
 }
