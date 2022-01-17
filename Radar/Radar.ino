@@ -29,12 +29,12 @@ void setup() {
 
 
 void loop() {
-  // асинхронный таймер на миллис
-  if (millis() - tmr >= 20) {
+
+  if (millis() - tmr >= 20) {                 // Instead of delay function
     tmr = millis();
-    val += dir;                               // прибавляем скорость
-    if (val >= 165 || val <= 15) dir = -dir;  // разворачиваем
-    myservo.write(val)                        // применяем
+    val += dir;                               // Each step of servo
+    if (val >= 165 || val <= 15) dir = -dir;  // Servo rotation range
+    myservo.write(val)                        
     
     distance = calculateDistance();           // Calls a function for calculating the distance measured by the Ultrasonic sensor for each degree
   
