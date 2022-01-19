@@ -11,7 +11,6 @@ void draw() {
   println("kak");
 }
 */
-//==============================================================================================
 void setup() {
   size(600, 400, P2D);
   noStroke();
@@ -63,5 +62,36 @@ void draw() {
   circle(mouseX, mouseY, 10);
  }
 }
-//==============================================================================================
+//=======================================PAIN-ERASE-ZOOMING=======================================================
+void setup() {
 
+ size(600, 400,P2D);
+ smooth(8);
+ frameRate(300);
+ noStroke();
+ fill(0);
+ background(200);
+}
+
+float size = 10;
+
+void draw() {
+
+ if (mousePressed == true) {
+  switch (mouseButton) {
+  
+   case LEFT: fill(0);
+    break;
+
+   case RIGHT: fill(200);
+    break;
+  }
+  circle(mouseX, mouseY, size);
+ }
+}
+
+void mouseWheel(MouseEvent event) {
+  size += event.getCount();
+  size = constrain(size, 0, 100);     // constrain zooming (0 - 100)
+}
+//===================================================================
