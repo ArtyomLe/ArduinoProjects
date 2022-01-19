@@ -26,7 +26,7 @@ float pixsDistance;
 int iAngle, iDistance;
 int index1=0;
 int index2=0;
-PFont orcFont;
+//PFont orcFont;
 
 void setup() {
   
@@ -34,13 +34,14 @@ void setup() {
  smooth();
  myPort = new Serial(this,"COM5", 9600); // starts the serial communication
  myPort.bufferUntil('.'); // reads the data from the serial port up to the character '.'. So actually it reads this: angle,distance.
- orcFont = loadFont("OCRAExtended-30.vlw");
+ //orcFont = loadFont("OCRAExtended-30.vlw");
 }
 
 void draw() {
   
   fill(98,245,31);
-  textFont(orcFont);
+  textFont(createFont("Arial", 30, true));
+  
   // simulating motion blur and slow fade of the moving line
   noStroke();
   fill(0,4); 
