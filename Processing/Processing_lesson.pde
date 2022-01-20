@@ -126,4 +126,22 @@ void draw() {
   }
   circle(x, y, 50);
 }
+//=====================================================COLOR================================
+void setup() {
+
+  size(600, 400, P2D);
+  smooth(8);
+  noStroke();
+  colorMode(HSB, 255, 255, 255);
+}
+
+int col = 0;
+
+void draw() {
+  background(200);
+  col++;
+  if (col > 255) col = 0;
+  fill(col, 255, 255); // максимальная насыщенность, максимальная яркость
+  circle(width/2, height/2, 150);
+}
 
