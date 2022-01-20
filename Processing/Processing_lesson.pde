@@ -94,4 +94,36 @@ void mouseWheel(MouseEvent event) {
   size += event.getCount();
   size = constrain(size, 0, 100);     // constrain zooming (0 - 100)
 }
-//===================================================================
+//=================================Управление с клавиатуры==================================
+void setup() {
+
+  size(600, 400, P2D);
+  smooth(8);
+  noStroke();
+  fill(20);
+}
+
+int x = 300, y = 200;
+int shift = 5;
+
+void draw() {
+  background(200);
+  if (keyPressed == true) {
+    switch(keyCode) {
+    case UP: 
+      y -= shift;
+      break;
+    case DOWN: 
+      y += shift;
+      break;
+    case LEFT: 
+      x -= shift;
+      break;
+    case RIGHT: 
+      x += shift;
+      break;
+    }
+  }
+  circle(x, y, 50);
+}
+
