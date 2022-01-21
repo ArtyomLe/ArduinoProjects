@@ -177,13 +177,16 @@ void setup() {
 
 float x = 300, y = 200;
 float velX = 3.5, velY = 7;
-int R = 25;
+int R = 25;                    // Отскакиваение шарика                
+
 void draw() {
   background(200);
   
+  // Интегрируем (вводим) скорость
   x += velX;
   y += velY;
   
+  // Алгоритм отскакивания шарика
   if (x < R || x > width - R) velX = -velX;
   if (y < R || y > height - R) velY = -velY;
   
