@@ -239,4 +239,33 @@ void draw() {
   }
   rotateZ(-radians(rot));
 }
-//==========================================================================================
+//=======================================Вывод данных без функций==========================================
+import controlP5.*;
+ControlP5 cp5;
+
+//Slider slider1;
+
+void setup() {
+  size(800, 600);             // Размер основного окна
+  cp5 = new ControlP5(this);  // Инициализация
+  cp5.setFont(createFont("Ubuntu", 20));
+
+  cp5.addSlider("slider")
+    .setPosition(100, 50)
+    .setSize(150, 30)
+    .setRange(0, 255)
+    ;
+
+  cp5.addTextfield("input")
+    .setPosition(100, 80)
+    .setSize(150, 30)
+    ;
+}
+
+void draw() {
+  background(120);
+  //  println(slider1.getValue());
+  println(cp5.get(Slider.class, "slider").getValue());
+  println(cp5.get(Textfield.class, "input").getText());
+}
+//========================================================================================
