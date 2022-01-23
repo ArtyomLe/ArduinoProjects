@@ -59,4 +59,37 @@ void setup() {
 void draw() {
 
 }
-//==================================================================================================
+//==================================================Добавление колеса палитры и разделение основного окна=========================================
+import controlP5.*;
+ControlP5 cp5;
+
+void setup() {
+  size(800, 600);             // Размер основного окна
+  cp5 = new ControlP5(this);  // Инициализация
+  cp5.setFont(createFont("Ubuntu", 20));
+
+  cp5.addButton("btn").setPosition(10, 10).setSize(100, 30).setLabel("button");
+  cp5.addSlider("slider").setPosition(10, 50).setSize(100, 30).setLabel("size").setRange(0, 100).setNumberOfTickMarks(10+1);
+
+  cp5.addColorWheel("col", 10, 100, 130);
+}
+
+void btn() {
+  println("click");
+}
+
+void slider(int val) {
+  d = val;
+}
+
+int x = 300, y = 300, d;
+color col;
+
+void draw() {
+  background(255);
+  fill(110);
+  rect(0, 0, 200, height);
+  fill(col);
+  circle(x, y, d);
+}
+//========================================================================================
