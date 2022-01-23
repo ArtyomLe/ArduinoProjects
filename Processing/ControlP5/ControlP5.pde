@@ -21,3 +21,20 @@ void slider(int val) {
 void draw() {
  background(120);
 }
+
+// =================================Automatic knobs insert=========================================
+import controlP5.*;
+COntrolP5;
+
+void setup() {
+
+ size(600, 400);
+ cp5 = new ControlP5(this);
+ cp5.addButton("btn1");
+ cp5.addButton("btn2").linebreak();
+ cp5.addButton("btn3");
+
+}
+
+void draw() {
+}
