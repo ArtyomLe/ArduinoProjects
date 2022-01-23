@@ -6,12 +6,16 @@ void setup() {
  cp5 = new ControlP5(this);
  cp5.setFont(createFont("Ubuntu", 20));
  cp5.addButton("btn").setPosition(10, 10).setSize(100, 30).setLabel("button 1");
- cp5.addSlider("slider").setPosition(10, 50).setSize(180, 30).setLabel("size");
+ cp5.addSlider("slider").setPosition(10, 50).setSize(180, 30).setLabel("size").setRange(0, 100).setNumberOfTickMarks(10+1);
 
 }
 
 void btn() {
  println("click");
+}
+
+void slider(int val) {
+ println(val);
 }
 
 void draw() {
