@@ -40,3 +40,41 @@ void loop() {
   
 }
 //===========================================СТРОКА================================================
+void setup() {
+  Serial.begin(9600);
+  int val1 = 1234;
+  int val2 = 5678;
+  /*
+  String str;
+  str = str + "http://website.co.il/request?param1=" + val1 + "&param2=" + val2;
+  Serial.println(str);
+  */
+
+  /*
+   * strcat(str1, str2)
+   * Прибавляет str2 к str1, при этом str1 должна иметь достаточный для этого размер. 
+   * NULL первой строки заменяется на первый символ из str2
+   *    *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+   * itoa(int_data, str, base) – записывает переменную типа int int_data в строку str с базисом* base.
+   * ltoa (long_data, str, base) – записывает переменную типа long long_data в строку str с базисом* base.
+   */
+   
+  char cstr[60] = "";
+  strcat(cstr, "http://website.co.il/request?param1=");
+  /* Вариант 1
+   *  char cint[10];
+   *  itoa(val1, cint, DEC);
+   *  strcat(cstr, cint);
+   *  Serial.println(cstr);
+   */
+  
+  itoa(val1, cstr + strlen(cstr), DEC);   // Вариант 2 (короче, только одна строка)
+  strcat(cstr, "&param2=");
+  itoa(val2, cstr + strlen(cstr), DEC);
+  // Вместо "cstr + strlen(cstr)" можно записать itoa(val2, strchr(cstr, NULL), DEC); Находим 0 окончание строки и добавляем значение
+  Serial.println(cstr);
+}
+
+void loop() {
+  
+}
