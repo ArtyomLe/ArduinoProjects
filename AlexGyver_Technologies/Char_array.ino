@@ -78,3 +78,20 @@ void setup() {
 void loop() {
   
 }
+//=================================================Преобразование строки в число====================================
+void setup() {
+  Serial.begin(9600);
+   
+ char cstr[] = "12345";
+ int val1 = atoi(cstr);
+ Serial.println(val1);
+
+// Выполняется в 2 раза дольше
+ String str = "12346";
+ int val2 = str.toInt();
+ Serial.println(val2);
+}
+
+void loop() {
+  
+}
