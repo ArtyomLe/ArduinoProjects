@@ -126,3 +126,30 @@ Serial.println(valuenum);
 }
 void loop() {
 }
+//=================================================================================================================
+void setup() {
+  Serial.begin(9600);
+// strchr(str, symb)         "Ищет символ symb в строке str и возвращает указатель на первое совпадение."
+// strncpy(str1, str2, num)  "Копирует num символов из начала str2 в начало str1"
+
+/*
+char cstr[] = "parameter, 3269";
+char* comma = strchr(cstr, ',');       // Указатель на первую попавшуюся , в строке
+char namevalue[10] = "";               // Создаём новую строку
+strncpy(namevalue, cstr, comma-cstr);  // Разность между указателем на запятую и на начало строки (в данном случае 9)
+int valuenum = atoi(++comma);          // Получаем значение(число) один символ после запятой 
+Serial.println(namevalue);
+Serial.println(valuenum);
+*/
+
+//Замена запятой на NULL и получение указателя на начало числа (способ 2)
+char cstr[] = "parameter, 3269";
+char* comma = strchr(cstr, ',');        // Указатель на первую попавшуюся , в строке
+comma[0] = NULL;                        // Указываем что строка заканчивается на том месте где раньше была запятая
+int valuenum = atoi(++comma);           // Получаем значение(число) один символ после запятой
+Serial.println(cstr);
+Serial.println(valuenum);
+
+}
+void loop() {
+}
