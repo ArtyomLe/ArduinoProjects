@@ -195,7 +195,7 @@ void loop() {
   int ints[5];
   int am = data.parseInts(ints);
 
-  switch (data[0]) {    // Ключ
+  switch (ints[0]) {    // Ключ
     case 0: digitalWrite(LED_1, ints[1]); break;
     case 1: digitalWrite(LED_2, ints[1]); break;
     case 2: 
