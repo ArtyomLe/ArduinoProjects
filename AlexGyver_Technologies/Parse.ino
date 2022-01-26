@@ -61,6 +61,14 @@ void setup() {
   Serial.setTimeout(1000);
 }
 
+/* 
+Serial.readBytesUntil(character, buffer, length)
+
+Читает данные из порта и закидывает их в буфер buffer (массив char [] или byte []), также указывается количество байт, который нужно записать – length 
+(чтобы не переполнить буфер) и терминальный символ character. Окончание приёма в buffer происходит при достижении заданного количества length,
+при приёме терминального символа character (он в буфер не идёт) или по таймауту
+*/
+
 void loop() {
  if(Serial.available()) {
   char data[30];
