@@ -154,3 +154,35 @@ void loop() {
  for (int i = 0; i < am; i++) Serial.println(ints[i]); 
 
 //=======================================================================================
+
+#include "Parser.h"
+#include "Servo.h"
+Servo servo;
+
+#define R_PIN 3
+#define G_PIN 5
+#define B_PIN 6
+
+#define LED_1 7
+#define LED_2 8
+#define SRV_PIN 9
+
+void setup() {
+  Serial.begin(9600);
+  Serial.setTimeout(1000);
+  
+  pinMode(R_PIN, OUTPUT);
+  pinMode(G_PIN, OUTPUT);
+  pinMode(B_PIN, OUTPUT);
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+  servo.attach(SRV_PIN);
+}
+
+/* 
+Протокол:
+0 - светодиод   0/1 
+1 - светодиод2  0/1
+2 - RGB (0...255, 0...255, 0...255)
+3 - Servo (0...180)
+*/
