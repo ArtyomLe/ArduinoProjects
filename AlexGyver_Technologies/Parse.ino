@@ -153,7 +153,7 @@ void loop() {
  int am = data.parseInts(ints);  // Раскидываем строку в указанный массив и возвращает кол-во чисел
  for (int i = 0; i < am; i++) Serial.println(ints[i]); 
 
-//=======================================================================================
+//=======================================ПРИМЕНЕНИЕ Parser.h==========================================
 
 #include "Parser.h"
 #include "Servo.h"
@@ -186,3 +186,24 @@ void setup() {
 2 - RGB (0...255, 0...255, 0...255)
 3 - Servo (0...180)
 */
+
+void loop() {
+  char str[30];
+  int amount = Serial.readBytesUntil(';', str, 30);
+  str[amount] = NULL;
+  Parser data(str, ',');
+  int ints[5];
+  int am = data.parseInts(ints);
+
+  switch (data[0]) {    // Ключ
+    case 0: digitalWrite(LED_1, ints[1]); break;
+    case 1: digitalWrite(LED_2, ints[1]); break;
+    case 2: 
+     digitalWrite(R_PIN, ints[1]);
+     digitalWrite(G_PIN, ints[2]);
+     digitalWrite(B_PIN, ints[3]);
+       break;
+    case 3: servo.write(ints[1]); break;
+  }
+}
+//================================================================================
