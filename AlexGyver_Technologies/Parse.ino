@@ -246,4 +246,23 @@ void loop() {
     Serial.println(millis() - ms);
   }
 }
-//===================================================================================
+// ======================Ассинхронный парсинг============================= 
+// как только данные перестают приходить, то сразу забираем их из буфера
+void loop() {
+  static byte prevAm = 0;
+  static uint32_t tmr = 0;
+  byte am = Serial.available();
+
+  if (am != prevAm) {
+    prevAm = am;
+    tmr = millis();
+  }
+
+  if ((am & millis() - tmr > 10 ) || am > 60) {
+    uint32_t us = micros();
+    char str[30];
+    int amount = Serial.readBytesUntil(';', str, 30);
+    Serial.println(micros() - us);
+  }
+}
+//==========================================================================================
