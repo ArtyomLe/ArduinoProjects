@@ -192,7 +192,7 @@ void loop() {
   int amount = Serial.readBytesUntil(';', str, 30);
   str[amount] = NULL;
   Parser data(str, ',');
-  int ints[5];
+  int ints[5];                       // Сколько интов ожидаем?(В данном примере 3)
   int am = data.parseInts(ints);
 
   switch (ints[0]) {    // Ключ
