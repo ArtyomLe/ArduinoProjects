@@ -258,7 +258,7 @@ void loop() {
     tmr = millis();
   }
 
-  if ((am & millis() - tmr > 10 ) || am > 60) {          // если вышел таймаут то начинаем парсинг
+  if ((am & millis() - tmr > 10 ) && am > 60) {          // если вышел таймаут то начинаем парсинг
     uint32_t us = micros();
     char str[30];
     int amount = Serial.readBytesUntil(';', str, 30);
