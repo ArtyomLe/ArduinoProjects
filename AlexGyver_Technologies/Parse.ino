@@ -206,4 +206,34 @@ void loop() {
     case 3: servo.write(ints[1]); break;
   }
 }
-//================================================================================
+//================================== Управление между 2 ардуино(RX/TX) =====================================
+// Transmiter
+#include <GyverButton.h>
+GButton btn(3);                  // Контакт кнопки на Digital 3
+
+void setup() {
+ Serial.setup(9600);
+}
+
+void loop() {
+
+  btn.tick();
+ if (btn.isClick()) {
+   static bool flag = 0;
+   flag = !flag;            //При каждом нажатии кнопки инвертируем состояние
+   Serial.print("0, ");
+   Serial.print(flag);
+   Serial.print(';');
+ }
+
+ static uint32_t tmr = 0;
+ if(millis() - tmr > 50) {        // Опрос 20 раз в секунду
+  tmr = millis();
+  Serial.print("3, ");
+  int val = analogRead(0);        // Контакт poten. на Analog 0
+  val = map(val, 0, 1023, 0, 180);
+  Serial.print(val);
+  Serial.print(';');
+ }
+}
+//=====================================================================================
