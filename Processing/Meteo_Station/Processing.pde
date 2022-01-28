@@ -87,3 +87,50 @@ void draw() {
    */
 }
 //=========================================== ПОСТРОЕНИЕ МЕНЮ (2) ======================================================
+// Требуется также прошить ардуино и указать там выводы диода и команды (n, f)
+
+int speed = 9600;
+String portName;
+
+import processing.serial.*;  // Подключаем библиотеку serial 
+Serial serial;               //  Называем её serial
+// Подключение библиотеки и создание обьекта
+import controlP5.*;
+ControlP5 cp5;
+
+void setup() {
+  size(400, 200);                // Размеры основного рабочего окна
+  cp5 = new ControlP5(this);     // Базовая инициализация
+
+  cp5.addButton("refresh").linebreak(); // После этой кнопки новая строка
+  cp5.addButton("open").linebreak();    // Получается столбик из кнопок
+  cp5.addButton("closePort").linebreak();
+  cp5.addButton("LedOn").linebreak();
+  cp5.addButton("LedOff").linebreak();
+  cp5.addScrollableList("comlist").close(); // Закрываем выпадающее меню чтобы не загараживало остальные кнопки основного меню
+}
+//================================================
+void refresh() {
+  String list[] = Serial.list();                            // Создаём строку
+  cp5.get(ScrollableList.class, "comlist").addItems(list);  // Обращаемся к дропдаун листу и добавляем список открытых портов
+}
+void comlist(int n) {               // Принимаем номер индекса выбранной строки порта
+  portName = Serial.list()[n];
+}
+void open() {
+  serial = new Serial (this, portName, speed); // Открываем сохранённый в строке порт
+}
+void closePort() {
+  serial.stop();
+}
+void LedOn() {
+  serial.write('n');
+}
+void LedOff() {
+  serial.write('f');
+}
+//================================================
+void draw() {
+  background(120);
+}
+//==================================================================================================================
