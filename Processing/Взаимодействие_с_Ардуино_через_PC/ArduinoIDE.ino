@@ -412,7 +412,11 @@ float Celsius = 0;
 
 void setup() {
   Serial.begin(115200);
+
   Tsensor.begin();
+  Tsensor.requestTemperatures();
+  Celsius = Tsensor.getTempCByIndex(0);
+
   servo.attach(SRV_PIN);
   pinMode(13, OUTPUT);
   pinMode(LED_R, OUTPUT);
@@ -421,6 +425,7 @@ void setup() {
 }
 
 void loop() {
+
   if (Serial.available()) {                // Если порт открыт. Пишем протокол связи (здесь численный посему "int ints[]" )
     char buf[50];                          // Сколько максимум символов будет в протоколе
     int num = Serial.readBytesUntil(';', buf, 50);   // Окончание строки значений (терминатор) делаем ;
@@ -446,7 +451,7 @@ void loop() {
 
   btn.tick();                           // Инициализация кнопки в цикле
   static uint32_t tmr = 0;
-  if (millis() - tmr > 100) {
+  if (millis() - tmr > 80) {
     tmr = millis();
     Serial.print(0);
     Serial.print(',');
@@ -454,9 +459,6 @@ void loop() {
     Serial.print(',');
     Serial.print(analogRead(PHOTO));
     Serial.print(',');
-
-    Tsensor.requestTemperatures();
-    Celsius = Tsensor.getTempCByIndex(0);
     Serial.println(Celsius);            // Читаем показания с термистра
   }
 
