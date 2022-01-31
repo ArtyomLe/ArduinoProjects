@@ -414,9 +414,6 @@ void setup() {
   Serial.begin(115200);
 
   Tsensor.begin();
-  Tsensor.requestTemperatures();
-  Celsius = Tsensor.getTempCByIndex(0);
-
   servo.attach(SRV_PIN);
   pinMode(13, OUTPUT);
   pinMode(LED_R, OUTPUT);
@@ -459,6 +456,9 @@ void loop() {
     Serial.print(',');
     Serial.print(analogRead(PHOTO));
     Serial.print(',');
+
+    Tsensor.requestTemperatures();
+    Celsius = Tsensor.getTempCByIndex(0);
     Serial.println(Celsius);            // Читаем показания с термистра
   }
 
