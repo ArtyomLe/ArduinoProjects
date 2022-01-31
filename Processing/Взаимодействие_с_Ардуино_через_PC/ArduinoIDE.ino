@@ -617,12 +617,11 @@ void loop() {
 
 //== ПОТЕНЦИОМЕТР И КНОПКА И RGB И SERVO И ФОТОРЕЗИСТОР И ТЕРМИСТОР (лёгкая библиотека гайвера) И ДЖОЙСТИК И LCD =======================
 
-
 #define POT A0         // Контакт потенциометра
 #define BTN 3          // Контакт кнопки
-#define LED_R 9        // Контакт LED RGB
-#define LED_G 10       // Контакт LED RGB
-#define LED_B 11       // Контакт LED RGB
+#define LED_R 3        // Контакт LED RGB  (9, 10, 11 не правильно отображают цвета потомучто сидят на одном таймере с серво приводом)
+#define LED_G 4        // Контакт LED RGB
+#define LED_B 5        // Контакт LED RGB
 #define SRV_PIN 2      // Контакт серво
 #define PHOTO A2       // Контакт фоторезистора
 #define JOYX A6        // Контакт джойстика Х
@@ -644,9 +643,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 #include <GParser.h>
 
 EncButton<EB_TICK, BTN> btn;  // Инициализация кнопки на 3 контакте и назовём btn
-
 bool flag = 0;
-float Celsius = 0;
 
 /* Ключи (с ардуино на ПК)
     0 - Потенциометр и Фоторезистор и Термистор в одном пакете
