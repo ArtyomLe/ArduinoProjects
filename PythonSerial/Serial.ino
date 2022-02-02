@@ -1,18 +1,15 @@
-#define POT A0         // Контакт потенциометра
-#define BTN 3          // Контакт кнопки
-#define LED_R 3        // Контакт LED RGB
-#define LED_G 4        // Контакт LED RGB
-#define LED_B 5        // Контакт LED RGB
-#define SRV_PIN 2      // Контакт серво
-#define PHOTO A2       // Контакт фоторезистора
-#define JOYX A6        // Контакт джойстика Х
-#define JOYY A7        // Контакт джойстика Y
-#define MOS 4          // Мосфет (для управления лампой от сети) *Опционально
-#define RELAY 5        // Реле (для управления лампой от сети) *Опционально
+// Аналоговые пины
+#define POT 0
+#define PHOTO 1
+#define JOYX 2
+#define JOYY 3
 
-// Подключение библиотек и инициализация компонентов
-#include <microDS18B20.h>
-MicroDS18B20<12> sensor;       // Контакт термистора
+// Цифровые пины
+#define SRV_PIN 2
+#define BTN 6
+#define LED_R 3
+#define LED_G 4
+#define LED_B 5
 
 #include <Servo.h>
 Servo servo;
@@ -20,88 +17,57 @@ Servo servo;
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
+
+#include <microDS18B20.h>
+MicroDS18B20<12> sensor;       // Контакт термистора
+
 #include <EncButton.h>
 #include <GParser.h>
+#include <AsyncStream.h>       // асинхронное чтение сериал
+AsyncStream<50> serial(&Serial, ';');   // указываем обработчик и стоп символ
 
-EncButton<EB_TICK, BTN> btn;  // Инициализация кнопки на 3 контакте и назовём btn
+EncButton<EB_TICK, BTN> btn;
 bool flag = 0;
-
-/* Ключи (с ардуино на ПК)
-    0 - Потенциометр и Фоторезистор и Термистор в одном пакете
-    1 - Кнопка;
-    2 - joyX, joyY (джойстик)
-
-    Ключи (С ПК на ардуино)
-    0 - LED (13);
-    1 - r,g,b;
-    2 - angle(0-180);
-    3 - Fan
-    4 - Relay
-    5 - Text
-*/
 
 void setup() {
   Serial.begin(115200);
+  lcd.init();
+  lcd.backlight();
   servo.attach(SRV_PIN);
-  lcd.init();                 // инициализация LCD
-  lcd.backlight();            // включить подсветку
-  pinMode(13, OUTPUT);
-  pinMode(LED_R, OUTPUT);
-  pinMode(LED_G, OUTPUT);
-  pinMode(LED_B, OUTPUT);
-  pinMode(MOS, OUTPUT);       // *Опционально
-  pinMode(RELAY, OUTPUT);     // *Опционально
+  pinMode(13, 1);
+  pinMode(LED_R, 1);
+  pinMode(LED_G, 1);
+  pinMode(LED_B, 1);
 }
 
+// с ардуино на пк, терминтаор \n
+// 0,потенц,фоторез,термистор
+// 1,кнопка
+// 2,joyx,joyy
+
+// с пк на ардуино, терминтаор ;
+// 0,лед 13
+// 1,r,g,b
+// 2,angle
+// 3,fan
+// 4,relay
+// 5,text
+
 void loop() {
+  parsing();
 
-  if (Serial.available()) {                // Если порт открыт. Пишем протокол связи (здесь численный посему "int ints[]" )
-    char buf[50];                          // Сколько максимум символов будет в протоколе
-    int num = Serial.readBytesUntil(';', buf, 50);   // Окончание строки значений (терминатор) делаем ;
-    buf[num] = NULL;                          // Записываем нулевой символ (NULL) в ячейку последней принятой строки для корректного определенния конца строки во время парсинга
-    GParser dat(buf, ',');                 // После того как прочитали входящие данные через "readBytesUntil" и занесли их в буфер "char buff" начинаем парсить с помощью библиотеки GParser
-    int ints[10];                          // Разбиваем полученные численные значения на массив интов
-    dat.parseInts(ints);                   // Заносим полученные данные в массив интс
-
-    switch (ints[0]) {                     // Ключ (если 0 то задействуем светодиод)
-      case 0:
-        digitalWrite(13, ints[1]);   // Значение(on/off) получаем со второй цифры массива ints[0, 1]
-        break;
-      case 1:
-        analogWrite(LED_R, ints[1]);
-        analogWrite(LED_G, ints[2]);
-        analogWrite(LED_B, ints[3]);
-        break;
-      case 2:
-        servo.write(ints[1]);
-        break;
-      case 3:
-        digitalWrite(MOS, ints[1]);
-        break;
-      case 4:
-        digitalWrite(RELAY, ints[1]);
-        break;
-      case 5:
-        dat.split();                   // Парсим знаки а не числа с помощью библиотеки GParser.h
-        lcd.clear();
-        lcd.home();
-        lcd.print(dat[1]);             // Выводим на LCD экран
-        break;
-    }
-  }
-
-  btn.tick();                           // Инициализация кнопки в цикле
+  btn.tick();
   static uint32_t tmr = 0;
-  if (millis() - tmr > 80) {
+  if (millis() - tmr > 100) {
     tmr = millis();
     Serial.print(0);
     Serial.print(',');
     Serial.print(analogRead(POT));
     Serial.print(',');
     Serial.print(analogRead(PHOTO));
-    Serial.print(',');
+    
     sensor.requestTemp();
-    Serial.println(sensor.getTemp());            // Читаем показания с термистра
+    Serial.println(sensor.getTemp());   // Читаем показания с термистра
   }
 
   static uint32_t tmr2 = 0;
@@ -114,10 +80,44 @@ void loop() {
     Serial.println(analogRead(JOYY));
   }
 
-  if (btn.isClick()) {                  // Если кнопка была кликнута
+  if (btn.isClick()) {
     flag = !flag;
     Serial.print(1);
     Serial.print(',');
     Serial.println(flag);
+  }
+}
+
+// функция парсинга, опрашивать в лупе
+void parsing() {
+  if (serial.available()) {
+    GParser data(serial.buf, ',');  // отдаём парсеру
+    int ints[10];                  // массив для численных данных
+    data.parseInts(ints);          // парсим в него
+
+    switch (ints[0]) {
+      case 0: digitalWrite(13, ints[1]);
+        break;
+      case 1:
+        analogWrite(LED_R, ints[1]);
+        analogWrite(LED_G, ints[2]);
+        analogWrite(LED_B, ints[3]);
+        break;
+      case 2:
+        servo.write(ints[1]);
+        break;
+      case 3:
+//        digitalWrite(MOS, ints[1]);
+        break;
+      case 4:
+//        digitalWrite(RELAY, ints[1]);
+        break;
+      case 5:
+        data.split();
+        lcd.clear();
+        lcd.home();
+        lcd.print(data[1]);
+        break;
+    }
   }
 }
