@@ -1,5 +1,6 @@
 // Viral Science www.viralsciencecreativity.com www.youtube.com/c/viralscience
 // ESP32 Cam Motion Alert | Send Image to Telegram
+// IMPORTANT CHANGE TO OLD ESP32 VERSION 1.0.4 IN BOARD MANAGER (actual version 2.0.2 18.02.22)
 
 // Enter your WiFi ssid and password
 const char* ssid     = "---------";   //WIFI SSID
