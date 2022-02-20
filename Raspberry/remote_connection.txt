@@ -1,0 +1,12 @@
+// ssh 
+// wpa_supplicant.conf
+// connection via PuTTY (192.168.x.x port 22 SSH raspberry)
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=IL
+network={
+ssid="-----------"
+psk="------------"
+key_mgmt=WPA-PSK
+}
